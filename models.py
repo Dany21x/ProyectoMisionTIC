@@ -1,0 +1,11 @@
+class User(db.Model):
+    id_user = db.Column(db.Integer, primary_key=True)
+    first_name = db.Column(db.String(100))
+    middle_name = db.Column(db.String(100))
+    last_name = db.Column(db.String(100))
+    user_name = db.Column(db.String(100))
+    password = db.Column(db.String(100))
+    email = db.Column(db.String(100))
+    id_country = db.Column(db.Integer)
+    id_department = db.Column(db.Integer)
+    id_city = db.Column(db.Integer)

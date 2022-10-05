@@ -1,0 +1,28 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+    <h1>Listado de personas</h1>
+    <br>
+    <div>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>User name</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{user.id_user}}</td>
+                    <td>{{user.user_name}}</td>
+                    <td>{{user.email}}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+    <div class="container">
+        <div class="row">
+            {% for pet in pets %}
+            <div class="col-md-3 mt-3">
+                <div class="card">
+                    <img src="{{pet.url_pet_image}}" alt="{{pet.pet_name}}" class="card-img-top" height="200">
+                    <div class="card-body">
+                        <h5 class="text-cent">{{pet.pet_name}}</h5>
+                        <p class="text-center">Descripción: {{pet.description}}</p>
+                        <p class="text-center">Perdido: {{pet.last_seen}}</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="float-left btn btn-primary">Ver más</a>
+                        <a href="#" class="float-right btn btn-warning">¡Lo he visto!</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

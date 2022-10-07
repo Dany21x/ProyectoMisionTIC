@@ -13,12 +13,15 @@ app = Flask(__name__)
 #Database configuration
 USER_DB = 'root'
 PASS_DB = ''
-URL_DB = 'localhost'
+#URL_DB = 'localhost'
 NAME_DB = 'pets_project_db'
 PORT_DB = 3307
-FULL_URL_DB = f'mysql+pymysql://{USER_DB}:{PASS_DB}@{URL_DB}:{PORT_DB}/{NAME_DB}?charset=utf8mb4'
+URL_DB = 'postgres://jeeubodudiaoht:1d663de02e1219428a4d423f82b6abc3ef6d4815ca6dc50a411b3700274cc3f8@ec2-34-231-42-166.compute-1.amazonaws.com:5432/dc3alntf94ab73'
+FULL_URL_DB = f'postgresql://{USER_DB}:{PASS_DB}@{URL_DB}/{NAME_DB}?charset=utf8mb4'
+#FULL_URL_DB = f'mysql+pymysql://{USER_DB}:{PASS_DB}@{URL_DB}:{PORT_DB}/{NAME_DB}?charset=utf8mb4'
 
-app.config['SQLALCHEMY_DATABASE_URI'] = FULL_URL_DB
+#app.config['SQLALCHEMY_DATABASE_URI'] = FULL_URL_DB
+app.config['SQLALCHEMY_DATABASE_URI'] = URL_DB
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['UPLOADED_IMAGES_DEST'] = 'static/upload_images'
 

@@ -21,7 +21,7 @@ PORT_DB = 3307
 FULL_URL_DB = 'postgresql://jeeubodudiaoht:1d663de02e1219428a4d423f82b6abc3ef6d4815ca6dc50a411b3700274cc3f8@ec2-34-231-42-166.compute-1.amazonaws.com:5432/dc3alntf94ab73'
 
 #MySQL
-FULL_URL_DB = f'mysql+pymysql://{USER_DB}:{PASS_DB}@{URL_DB}:{PORT_DB}/{NAME_DB}?charset=utf8mb4'
+#FULL_URL_DB = f'mysql+pymysql://{USER_DB}:{PASS_DB}@{URL_DB}:{PORT_DB}/{NAME_DB}?charset=utf8mb4'
 
 #app.config['SQLALCHEMY_DATABASE_URI'] = FULL_URL_DB
 app.config['SQLALCHEMY_DATABASE_URI'] = FULL_URL_DB

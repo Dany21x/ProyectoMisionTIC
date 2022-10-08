@@ -13,15 +13,18 @@ app = Flask(__name__)
 #Database configuration
 USER_DB = 'root'
 PASS_DB = ''
-#URL_DB = 'localhost'
+URL_DB = 'localhost'
 NAME_DB = 'pets_project_db'
 PORT_DB = 3307
-URL_DB = 'postgresql://jeeubodudiaoht:1d663de02e1219428a4d423f82b6abc3ef6d4815ca6dc50a411b3700274cc3f8@ec2-34-231-42-166.compute-1.amazonaws.com:5432/dc3alntf94ab73'
-FULL_URL_DB = f'postgresql://{USER_DB}:{PASS_DB}@{URL_DB}/{NAME_DB}?charset=utf8mb4'
-#FULL_URL_DB = f'mysql+pymysql://{USER_DB}:{PASS_DB}@{URL_DB}:{PORT_DB}/{NAME_DB}?charset=utf8mb4'
+
+#Postgres
+FULL_URL_DB = 'postgresql://jeeubodudiaoht:1d663de02e1219428a4d423f82b6abc3ef6d4815ca6dc50a411b3700274cc3f8@ec2-34-231-42-166.compute-1.amazonaws.com:5432/dc3alntf94ab73'
+
+#MySQL
+FULL_URL_DB = f'mysql+pymysql://{USER_DB}:{PASS_DB}@{URL_DB}:{PORT_DB}/{NAME_DB}?charset=utf8mb4'
 
 #app.config['SQLALCHEMY_DATABASE_URI'] = FULL_URL_DB
-app.config['SQLALCHEMY_DATABASE_URI'] = URL_DB
+app.config['SQLALCHEMY_DATABASE_URI'] = FULL_URL_DB
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['UPLOADED_IMAGES_DEST'] = 'static/upload_images'
 
@@ -50,7 +53,7 @@ def register_user():
     userForm.id_country.choices = [(country.id_country, country.country_name) for country in Country.query.all()]
     userForm.id_department.choices = [(department.id_department, department.department_name) for department in
                                       Department.query.all()]
-    userForm.id_city.choices = [(city.id_city, city.city_name) for city in City.query.filter_by(id_department=5).all()]
+    userForm.id_city.choices = [(city.id_city, city.city_name) for city in City.query.all()]
     #print(City.query.filter_by(id_department=3).all())
 
     if request.method == 'POST':
@@ -89,16 +92,19 @@ def register_lost_pet():
     lostPetForm.id_country.choices = [(country.id_country, country.country_name) for country in Country.query.all()]
     lostPetForm.id_department.choices = [(department.id_department, department.department_name) for department in
                                       Department.query.all()]
-    lostPetForm.id_city.choices = [(city.id_city, city.city_name) for city in City.query.filter_by(id_department=5).all()]
+    lostPetForm.id_city.choices = [(city.id_city, city.city_name) for city in City.query.all()]
 
     if request.method == 'POST':
         if lostPetForm.validate_on_submit():
             lostPetForm.populate_obj(lostPet)
 
             if 'url_pet_image' in request.files:
+                #filename = secure_filename(file.filename)
+                #filename = images.save(lostPetForm.url_pet_image.data)
+                #filename = images.save(image)
                 image = request.files["url_pet_image"]
                 filename = images.save(lostPetForm.url_pet_image.data)
-                lostPet.url_pet_image = images.url(filename)
+                lostPet.url_pet_image = f'{app.config["UPLOADED_IMAGES_DEST"]}/{image.filename}'
 
             app.logger.debug(f'Persona a insertar: {lostPet}') #con populate se llena el objeto user desde el formulario
             #Insert on DB

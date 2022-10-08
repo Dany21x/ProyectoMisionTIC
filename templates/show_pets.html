@@ -11,10 +11,11 @@
                         <h5 class="text-cent">{{pet.pet_name}}</h5>
                         <p class="text-center">Descripción: {{pet.description}}</p>
                         <p class="text-center">Perdido: {{pet.last_seen}}</p>
+                        <p class="text-center">Estado: {{pet.status}}</p>
                     </div>
                     <div class="card-footer">
-                        <a href="#" class="float-left btn btn-primary">Ver más</a>
-                        <a href="#" class="float-right btn btn-warning">¡Lo he visto!</a>
+                        <a href="more_info.html/{{pet.id_lost_pet}}" class="float-left btn btn-primary">Ver más</a>
+                        <a href="report_seen_pet.html/{{pet.id_lost_pet}}" class="float-right btn btn-warning">¡Lo he visto!</a>
                     </div>
                 </div>
             </div>

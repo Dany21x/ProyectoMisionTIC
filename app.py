@@ -5,8 +5,8 @@ from flask_uploads import configure_uploads, IMAGES, UploadSet
 
 
 from database import db
-from forms import UserForm, LostPetForm
-from models import User, LostPet, Country, Department, City
+from forms import UserForm, LostPetForm, PetReportForm, PetStatusForm
+from models import User, LostPet, Country, Department, City, PetReport
 
 app = Flask(__name__)
 
@@ -21,7 +21,7 @@ PORT_DB = 3307
 FULL_URL_DB = 'postgresql://jeeubodudiaoht:1d663de02e1219428a4d423f82b6abc3ef6d4815ca6dc50a411b3700274cc3f8@ec2-34-231-42-166.compute-1.amazonaws.com:5432/dc3alntf94ab73'
 
 #MySQL
-#FULL_URL_DB = f'mysql+pymysql://{USER_DB}:{PASS_DB}@{URL_DB}:{PORT_DB}/{NAME_DB}?charset=utf8mb4'
+FULL_URL_DB = f'mysql+pymysql://{USER_DB}:{PASS_DB}@{URL_DB}:{PORT_DB}/{NAME_DB}?charset=utf8mb4'
 
 #app.config['SQLALCHEMY_DATABASE_URI'] = FULL_URL_DB
 app.config['SQLALCHEMY_DATABASE_URI'] = FULL_URL_DB
@@ -54,7 +54,6 @@ def register_user():
     userForm.id_department.choices = [(department.id_department, department.department_name) for department in
                                       Department.query.all()]
     userForm.id_city.choices = [(city.id_city, city.city_name) for city in City.query.all()]
-    #print(City.query.filter_by(id_department=3).all())
 
     if request.method == 'POST':
         if userForm.validate_on_submit():
@@ -134,6 +133,56 @@ def city(id_department):
 def show_pets():
     pets = LostPet.query.all()
     return render_template('show_pets.html', pets=pets)
+
+
+@app.route('/more_info/<int:id_lost_pet>')
+@app.route('/more_info.html/<int:id_lost_pet>')
+def more_info(id_lost_pet):
+    lost_pet = LostPet.query.get(id_lost_pet)
+    pet_reports = PetReport.query.filter_by(id_lost_pet=id_lost_pet).all()
+    return render_template('more_info.html', lost_pet=lost_pet, pet_reports=pet_reports)
+
+
+@app.route('/report_seen_pet/<int:id_lost_pet>', methods=['GET','POST'])
+@app.route('/report_seen_pet.html/<int:id_lost_pet>', methods=['GET','POST'])
+def report_seen_pet(id_lost_pet):
+
+    petReport = PetReport()
+    petReportForm = PetReportForm(obj=petReport)
+    lost_pet = LostPet.query.get(id_lost_pet)
+
+    if request.method == 'POST':
+
+        if petReportForm.validate_on_submit():
+
+            petReportForm.populate_obj(petReport)
+            app.logger.debug(f'Reporte a insertar: {petReport}') #con populate se llena el objeto user desde el formulario
+            #Insert on DB
+            db.session.add(petReport)
+            db.session.commit()
+            return redirect(url_for('change_pet_status',id_lost_pet=id_lost_pet))
+            #return render_template('change_pet_status.html/', id_lost_pet=id_lost_pet, lost_pet=lost_pet)
+            #return redirect('change_pet_status', lost_pet=lost_pet)
+        else:
+            print(petReportForm.errors)
+
+    return render_template('report_seen_pet.html', form=petReportForm, lost_pet=lost_pet)
+
+@app.route('/change_pet_status/<int:id_lost_pet>', methods=['GET','POST'])
+@app.route('/change_pet_status.html/<int:id_lost_pet>', methods=['GET','POST'])
+def change_pet_status(id_lost_pet):
+
+    lost_pet = LostPet.query.get(id_lost_pet)
+    petStatusForm = PetStatusForm(obj=lost_pet)
+
+    if request.method == 'POST':
+        if petStatusForm.validate_on_submit():
+            petStatusForm.populate_obj(lost_pet)
+            db.session.commit()
+            return redirect(url_for('index'))
+    return render_template('change_pet_status.html', form=petStatusForm, lost_pet=lost_pet)
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

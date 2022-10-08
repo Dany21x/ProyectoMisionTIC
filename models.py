@@ -22,6 +22,7 @@ class User(db.Model):
 
 class LostPet(db.Model):
     id_lost_pet = db.Column(db.Integer, primary_key=True)
+    status = db.Column(db.String(100))
     pet_type = db.Column(db.String(100))
     pet_name = db.Column(db.String(100))
     pet_breed = db.Column(db.String(100))
@@ -51,3 +52,11 @@ class City(db.Model):
     city_name = db.Column(db.String(100))
     state = db.Column(db.Integer)
     id_department = db.Column(db.Integer, db.ForeignKey('department.id_department'))
+
+class PetReport(db.Model):
+    id_report = db.Column(db.Integer, primary_key=True)
+    location = db.Column(db.String(100))
+    hour = db.Column(db.DateTime)
+    id_lost_pet = db.Column(db.Integer, db.ForeignKey('lost_pet.id_lost_pet'))
+    status = db.Column(db.String(100))
+    contact_number = db.Column(db.Integer)

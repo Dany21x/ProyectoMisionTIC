@@ -11,23 +11,23 @@ h1{
 	padding: 10px 30px;
 }
 
-nav h4{
+/****tìtulo mascota mìa*****/
+.titulo-mascota-mia{
 	color: blue;
 	text-align: center;
-	font: small-caps 100%/200% serif;
+	font: small-caps 100%/200% Times;
 	font-size: xx-large;
 	display:inline-block;
 	font-weight:bold;
-}
 
-nav{
+
 
 }
+/****tìtulo mascota mìa*****/
 
 body{
 	background-color: white;
 	background-image: url("../img/fondo.jpg");
-
 
 }
 p{
@@ -52,7 +52,19 @@ div class{
 	border-style: groove;
 	border-radius: 10%;
 }
+.info{
+	float:left;
+}
+.texto{
 
+	float:left;
+}
+.card_more{
+	margin-right: 50px;
+	margin-left: 20px;
+	margin-top: 10px;
+	text-align: left;
+}
 form{
 	margin-left: 100px;
 
@@ -83,3 +95,39 @@ th, td {
     width: 100px;
     word-wrap: break-word;
 }
+
+/********Botones de inicio***********/
+.row-index{
+	background-color: #3bacbb;
+	display:inline-flex;
+	cursor: pointer;
+	transition: 0.5s;
+	margin-left: 750px;
+	margin-top: 50px;
+	font-size: x-large;
+
+}
+
+.row-index a{
+	text-decoration: none;
+	color: white;
+	padding: 10px 10px;
+
+}
+
+
+.row-index a:hover{
+	background-color: rgb(184, 247, 238);
+	color: black;
+
+}
+/********Botones de inicio***********/
+
+/********formulario mascota perdida***********/
+
+.fmp{
+	text-align: left;
+
+}
+
+/********formulario mascota perdida***********/

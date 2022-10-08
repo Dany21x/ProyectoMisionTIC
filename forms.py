@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, EmailField, \
                     IntegerField, DateTimeField, SelectMultipleField, \
-                    SelectField, PasswordField
+                    SelectField, PasswordField, HiddenField, RadioField
 from wtforms.fields import DateTimeLocalField, DateTimeField
 from wtforms.validators import DataRequired, InputRequired
 from wtforms.widgets import TextArea
@@ -35,4 +35,17 @@ class LostPetForm(FlaskForm):
     contact_numer = IntegerField('Número de contacto')
     description = StringField('Descripción', validators=[DataRequired()], widget=TextArea())
     url_pet_image = FileField('Foto', validators=[FileAllowed(['jpg','jpeg','png']), FileRequired()])
+    status = HiddenField()
     submit = SubmitField('Publicar')
+
+class PetReportForm(FlaskForm):
+    location = StringField('¿Dónde lo viste?', validators=[DataRequired()])
+    hour = DateTimeLocalField('¿Cuándo lo viste? ', format="%Y-%m-%dT%H:%M", validators=[InputRequired()])
+    id_lost_pet = HiddenField(validators=[DataRequired()])
+    contact_number = IntegerField('Número de contacto')
+    submit = SubmitField('Reportar')
+
+class PetStatusForm(FlaskForm):
+    id_lost_pet = HiddenField(validators=[DataRequired()])
+    status = RadioField('Selecciona el estado de la mascota:', choices=[('encontrada','La encontré'),('vista','Solo la vi')])
+    submit = SubmitField('Reportar')

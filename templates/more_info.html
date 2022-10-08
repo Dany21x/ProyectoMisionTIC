@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+    <div class="div-header">
+   		<div class="card_more">
+			<div class="card-header"><br>
+				<a href="../show_pets" class="btn btn-outline-info">Volver</a>
+
+			</div>
+
+			<div class="row">
+
+			    <h1 style="color:black">Mascota: {{lost_pet.pet_name}}</h1><br><br><br>
+			    <div class="col-md-5">
+			        <img src="../{{lost_pet.url_pet_image}}" alt="{{lost_pet.pet_name}}" class="card-img-left" height="200"  width="220" ><br><br>
+			    </div>
+			    <div class="col-md-6">
+                    <p class="text-left" style="color: black; font-weight:bold">Edad: {{lost_pet.int_pet_age}} años</p>
+                    <p class="text-left" style="color: black; font-weight:bold">Perdido en: {{lost_pet.location}}</p>
+                    <p class="text-left" style="color: black; font-weight:bold">El dia: {{lost_pet.last_seen}}</p><br>
+                    <p class="text-left" style="color: black; font-weight:bold">Llamar a: {{lost_pet.contact_numer}}</p><br>
+                    <p class="text-left" style="color: cyan; font-weight:bold">Avistamientos</p>
+					{% for pet_report in pet_reports %}
+                    	<p class="text-left" style="color: black; font-weight:bold">{{pet_report.location}}, {{pet_report.hour}}, cel:{{pet_report.contact_number}} </p>
+					{% endfor %}
+			</div>
+			</div>
+		</div>
+
+{% endblock %}

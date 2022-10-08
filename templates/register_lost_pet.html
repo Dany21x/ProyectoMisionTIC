@@ -4,10 +4,14 @@
 
 
 <div class="div-header">
-    <h1>Registrar mascota perdida</h1><br><br>
-    <form method="POST" enctype="multipart/form-data">
-        {{form.csrf_token}}
+    <div class="card_more">
+        <div class="row">
+            <h1>Registrar mascota perdida</h1><br><br>
+            <form method="POST" enctype="multipart/form-data">
+                {{form.csrf_token}}
+        </div>
 
+        <div class="col-md-6">
         <table>
             <tr>
                 <td>{{form.pet_name.label}}</td>
@@ -67,13 +71,17 @@
             </tr>
         </table>
         <br>
-        <p>
+        </div>
+
+        <div class="Publicar">
+            <input type="hidden" id="status" name="status" required="" value="perdida" />
             {{form.submit()}}
-            <br>
-        </p>
+        </div><br>
+    </div><br>
 
     </form>
 </div>
+
     <script>
 
     </script>

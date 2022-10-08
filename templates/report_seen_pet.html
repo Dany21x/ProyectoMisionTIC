@@ -1,0 +1,46 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+<div class="div-header">
+        <div class="card_more">
+            <div class="card-header"><br>
+                <a href="../show_pets.html" class="btn btn-outline-warning">Volver</a>
+
+            </div>
+            <div class="row">
+
+            <h1 style="color:black">Reporte de mascota encontrada/vista:</h1><br><br><br>
+            <div class="col-md-4">
+                <img src="../{{lost_pet.url_pet_image}}" alt="{{lost_pet.pet_name}}" class="card-img-left" height="170" width="220"><br><br>
+                <form method="POST" enctype="multipart/form-data">
+                {{form.csrf_token}}
+            </div>
+                <div class="col-md-6">
+                <table>
+                 <tr>
+                     <td>{{form.location.label}}</td>
+                     <td>{{form.location(size=17)}}</td>
+                </tr>
+                <tr>
+                    <td>{{form.hour.label}}</td>
+                    <td>{{form.hour(size=26)}}</td>
+                </tr>
+                <tr>
+                    <td>{{form.contact_number.label}}</td>
+                    <td>{{form.contact_number(size=17)}}</td>
+                </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="Publicar">
+
+    <input id="id_lost_pet" name="id_lost_pet" required="" type="hidden" value="{{lost_pet.id_lost_pet}}">
+    {{form.submit()}}
+
+
+    </div>
+    </form>
+    <br>
+
+{% endblock %}
